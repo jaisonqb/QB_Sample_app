@@ -2,6 +2,9 @@
 using Xamarin.Forms;
 using QBurst.Views;
 using Xamarin.Forms.Xaml;
+using System.Threading.Tasks;
+using QBurst.ViewModels.Base;
+using QBurst.Navigation;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace QBurst
@@ -13,11 +16,15 @@ namespace QBurst
 		{
 			InitializeComponent();
 
-
-			MainPage = new MainPage();
+            InitNavigation(null);
+            //MainPage = new MainPage();
 		}
-
-		protected override void OnStart ()
+        private Task InitNavigation(string AppLinkUrl)
+        {
+            var navigationService = ViewModelLocator.Instance.Resolve<INavigationService>();
+            return navigationService.InitializeAsync(AppLinkUrl);
+        }
+        protected override void OnStart ()
 		{
 			// Handle when your app starts
 		}
